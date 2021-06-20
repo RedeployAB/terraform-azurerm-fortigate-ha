@@ -13,13 +13,13 @@ variable "location" {
   description = "Location used for the deployed resources. Must be the same as the location used for network resources (virtual network, subnet)."
 }
 
-variable "active_fw_name" {
+variable "active_appliance_name" {
   type        = string
   description = ""
   default     = null
 }
 
-variable "passive_fw_name" {
+variable "passive_appliance_name" {
   type        = string
   description = ""
   default     = null

@@ -4,15 +4,14 @@ locals {
   public_load_balancer_name  = coalesce(var.public_load_balancer_name, "lb-fw")
   private_load_balancer_name = coalesce(var.private_load_balancer_name, "lb-fw-internal")
   cluster_public_ip_name     = coalesce(var.cluster_public_ip_name, "pip-fw")
-
-  fw_name = {
-    active  = coalesce(var.active_fw_name, "fw01")
-    passive = coalesce(var.passive_fw_name, "fw02")
+  appliance_name = {
+    active  = coalesce(var.active_appliance_name, "fw01")
+    passive = coalesce(var.passive_appliance_name, "fw02")
   }
 
   appliance_config = {
     active = {
-      name                         = local.fw_name.active
+      name                         = local.appliance_name.active
       size                         = var.size
       os_version                   = var.os_version
       license_type                 = var.license_type
@@ -20,14 +19,14 @@ locals {
       config_path                  = var.config_path
       public_interface_ip_address  = var.active_public_interface_ip_address
       private_interface_ip_address = var.active_private_interface_ip_address
-      public_ip_name               = coalesce(var.active_public_ip_name, "pip-${local.fw_name.active}")
-      public_interface_name        = coalesce(var.active_public_interface_name, "nic-${local.fw_name.active}-01")
-      private_interface_name       = coalesce(var.active_private_interface_name, "nic-${local.fw_name.active}-02")
-      os_disk_name                 = coalesce(var.active_os_disk_name, "os-${local.fw_name.active}")
-      log_disk_name                = coalesce(var.active_log_disk_name, "data-${local.fw_name.active}-01")
+      public_ip_name               = coalesce(var.active_public_ip_name, "pip-${local.appliance_name.active}")
+      public_interface_name        = coalesce(var.active_public_interface_name, "nic-${local.appliance_name.active}-01")
+      private_interface_name       = coalesce(var.active_private_interface_name, "nic-${local.appliance_name.active}-02")
+      os_disk_name                 = coalesce(var.active_os_disk_name, "os-${local.appliance_name.active}")
+      log_disk_name                = coalesce(var.active_log_disk_name, "data-${local.appliance_name.active}-01")
     }
     passive = {
-      name                         = local.fw_name.passive
+      name                         = local.appliance_name.passive
       size                         = var.size
       os_version                   = var.os_version
       license_type                 = var.license_type
@@ -35,11 +34,11 @@ locals {
       config_path                  = var.config_path
       public_interface_ip_address  = var.passive_public_interface_ip_address
       private_interface_ip_address = var.passive_private_interface_ip_address
-      public_ip_name               = coalesce(var.passive_public_ip_name, "pip-${local.fw_name.passive}")
-      public_interface_name        = coalesce(var.passive_public_interface_name, "nic-${local.fw_name.passive}-01")
-      private_interface_name       = coalesce(var.passive_private_interface_name, "nic-${local.fw_name.passive}-02")
-      os_disk_name                 = coalesce(var.passive_os_disk_name, "os-${local.fw_name.passive}")
-      log_disk_name                = coalesce(var.passive_log_disk_name, "data-${local.fw_name.passive}-01")
+      public_ip_name               = coalesce(var.passive_public_ip_name, "pip-${local.appliance_name.passive}")
+      public_interface_name        = coalesce(var.passive_public_interface_name, "nic-${local.appliance_name.passive}-01")
+      private_interface_name       = coalesce(var.passive_private_interface_name, "nic-${local.appliance_name.passive}-02")
+      os_disk_name                 = coalesce(var.passive_os_disk_name, "os-${local.appliance_name.passive}")
+      log_disk_name                = coalesce(var.passive_log_disk_name, "data-${local.appliance_name.passive}-01")
     }
   }
 }
