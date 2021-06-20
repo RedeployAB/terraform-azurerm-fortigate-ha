@@ -11,7 +11,7 @@ resource "azurerm_availability_set" "appliance" {
 
 module "appliance" {
   for_each = local.appliance_config
-  source   = "github.com/RedeployAB/terraform-azurerm-fortigate-single"
+  source   = "github.com/RedeployAB/terraform-azurerm-fortigate-single?ref=main"
 
   name                = each.value.name
   resource_group_name = var.resource_group_name

@@ -185,10 +185,6 @@ resource "azurerm_lb_backend_address_pool" "private_pool" {
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "private_pool" {
-  # for_each = toset([
-  #   module.appliance["active"].private_interface_id,
-  #   module.appliance["passive"].private_interface_id
-  # ])
   for_each = local.appliance_config
 
   network_interface_id    = module.appliance[each.key].private_interface_id
