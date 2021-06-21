@@ -27,7 +27,6 @@ resource "azurerm_lb" "public_interface" {
   frontend_ip_configuration {
     name                       = local.public_frontend_ip_configuration_name["cluster"]
     public_ip_address_id       = azurerm_public_ip.cluster.id
-    private_ip_address_version = "IPv4"
   }
 
   # Dedicated active and passive PIPs
@@ -36,11 +35,19 @@ resource "azurerm_lb" "public_interface" {
     content {
       name                       = local.public_frontend_ip_configuration_name[frontend_ip_configuration.key]
       public_ip_address_id       = module.appliance[frontend_ip_configuration.key].public_ip_id
-      private_ip_address_version = "IPv4"
     }
   }
 
   tags = var.tags
+
+  # Ignore changes to private_ip_address_version to prevent Terraform from trying to add it every apply.
+  lifecycle {
+    ignore_changes = [
+      frontend_ip_configuration[0].private_ip_address_version,
+      frontend_ip_configuration[1].private_ip_address_version,
+      frontend_ip_configuration[2].private_ip_address_version
+    ]
+  }
 }
 
 resource "azurerm_lb_probe" "public_probe" {
