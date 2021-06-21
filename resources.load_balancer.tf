@@ -25,16 +25,16 @@ resource "azurerm_lb" "public_interface" {
 
   # Cluster PIP used for outbound traffic
   frontend_ip_configuration {
-    name                       = local.public_frontend_ip_configuration_name["cluster"]
-    public_ip_address_id       = azurerm_public_ip.cluster.id
+    name                 = local.public_frontend_ip_configuration_name["cluster"]
+    public_ip_address_id = azurerm_public_ip.cluster.id
   }
 
   # Dedicated active and passive PIPs
   dynamic "frontend_ip_configuration" {
     for_each = local.appliance_config
     content {
-      name                       = local.public_frontend_ip_configuration_name[frontend_ip_configuration.key]
-      public_ip_address_id       = module.appliance[frontend_ip_configuration.key].public_ip_id
+      name                 = local.public_frontend_ip_configuration_name[frontend_ip_configuration.key]
+      public_ip_address_id = module.appliance[frontend_ip_configuration.key].public_ip_id
     }
   }
 
