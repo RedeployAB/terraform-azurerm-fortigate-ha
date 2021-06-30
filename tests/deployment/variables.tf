@@ -18,7 +18,7 @@ variable "size" {
 
 variable "os_version" {
   type    = string
-  default = "6.4.5"
+  default = "6.4.6"
 }
 
 variable "allowed_admin_ips" {
