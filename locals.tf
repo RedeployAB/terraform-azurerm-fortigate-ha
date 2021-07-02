@@ -16,7 +16,7 @@ locals {
       os_version                   = var.os_version
       license_type                 = var.license_type
       license_path                 = coalesce(var.active_license_path, "${path.root}/active-license.lic")
-      config_path                  = var.config_path
+      config_path                  = var.active_config_path
       public_interface_ip_address  = var.active_public_interface_ip_address
       private_interface_ip_address = var.active_private_interface_ip_address
       public_ip_name               = coalesce(var.active_public_ip_name, "pip-${local.appliance_name.active}")
@@ -31,7 +31,7 @@ locals {
       os_version                   = var.os_version
       license_type                 = var.license_type
       license_path                 = coalesce(var.passive_license_path, "${path.root}/passive-license.lic")
-      config_path                  = var.config_path
+      config_path                  = var.passive_config_path
       public_interface_ip_address  = var.passive_public_interface_ip_address
       private_interface_ip_address = var.passive_private_interface_ip_address
       public_ip_name               = coalesce(var.passive_public_ip_name, "pip-${local.appliance_name.passive}")
