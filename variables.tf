@@ -70,7 +70,13 @@ variable "passive_license_path" {
   default     = null
 }
 
-variable "config_path" {
+variable "active_config_path" {
+  type        = string
+  description = "Path to a custom configuration file used while deploying the firewall. Defaults to the config file provided with the module."
+  default     = null
+}
+
+variable "passive_config_path" {
   type        = string
   description = "Path to a custom configuration file used while deploying the firewall. Defaults to the config file provided with the module."
   default     = null
