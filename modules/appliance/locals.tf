@@ -33,23 +33,27 @@ locals {
   public_ip_name = coalesce(var.public_ip_name, "pip-${var.name}")
   network_interfaces = {
     public = {
-      name               = coalesce(var.public_interface_name, "nic-${var.name}-01")
+      name               = coalesce(var.public_interface_name, "nic-${var.name}-internet")
       private_ip_address = var.public_interface_ip_address
+      gateway_ip_address = var.public_gateway_ip_address
       subnet_id          = var.public_subnet_id
     }
     private = {
-      name               = coalesce(var.private_interface_name, "nic-${var.name}-02")
+      name               = coalesce(var.private_interface_name, "nic-${var.name}-transit")
       private_ip_address = var.private_interface_ip_address
+      gateway_ip_address = var.private_gateway_ip_address
       subnet_id          = var.private_subnet_id
     }
     hasync = {
-      name               = coalesce(var.hasync_interface_name, "nic-${var.name}-03")
+      name               = coalesce(var.hasync_interface_name, "nic-${var.name}-hasync")
       private_ip_address = var.hasync_interface_ip_address
+      gateway_ip_address = var.hasync_gateway_ip_address
       subnet_id          = var.hasync_subnet_id
     }
     mgmt = {
-      name               = coalesce(var.mgmt_interface_name, "nic-${var.name}-04")
+      name               = coalesce(var.mgmt_interface_name, "nic-${var.name}-mgmt")
       private_ip_address = var.mgmt_interface_ip_address
+      gateway_ip_address = var.mgmt_gateway_ip_address
       subnet_id          = var.mgmt_subnet_id
     }
   }

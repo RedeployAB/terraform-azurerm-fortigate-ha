@@ -52,13 +52,14 @@ resource "azurerm_network_security_rule" "allow_admin_ips" {
   resource_group_name         = azurerm_virtual_network.test_environment.resource_group_name
   network_security_group_name = azurerm_network_security_group.test_environment["mgmt"].name
 
-  name                       = "AllowAdminInBound"
-  priority                   = 1000
-  direction                  = "Inbound"
-  access                     = "Allow"
-  protocol                   = "Tcp"
-  source_port_range          = "*"
-  destination_port_ranges    = ["22", "8443"]
+  name                   = "AllowAdminInBound"
+  priority               = 1000
+  direction              = "Inbound"
+  access                 = "Allow"
+  protocol               = "Tcp"
+  source_port_range      = "*"
+  destination_port_range = "443"
+  # destination_port_ranges    = ["22", "8443"]
   source_address_prefixes    = var.allowed_admin_ips
   destination_address_prefix = "*"
 }

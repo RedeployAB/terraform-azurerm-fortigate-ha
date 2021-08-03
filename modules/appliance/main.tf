@@ -107,7 +107,11 @@ resource "azurerm_virtual_machine_data_disk_attachment" "logs" {
 data "template_file" "config" {
   template = file(var.config_path)
   vars = {
-    license_type          = var.license_type
-    license_file_contents = local.license_contents
+    license_type               = var.license_type
+    license_file_contents      = local.license_contents
+    public_gateway_ip_address  = local.network_interfaces["public"].gateway_ip_address
+    private_gateway_ip_address = local.network_interfaces["private"].gateway_ip_address
+    mgmt_gateway_ip_address    = local.network_interfaces["mgmt"].gateway_ip_address
+    hasync_peer_ip_address     = var.hasync_peer_ip_address
   }
 }
