@@ -60,13 +60,12 @@ resource "azurerm_lb" "interface" {
   tags = var.tags
 
   # Ignore changes to private_ip_address_version to prevent Terraform from trying to add it every apply.
-  # lifecycle {
-  #   ignore_changes = [
-  #     frontend_ip_configuration[0].private_ip_address_version
-  #     # frontend_ip_configuration[1].private_ip_address_version,
-  #     # frontend_ip_configuration[2].private_ip_address_version
-  #   ]
-  # }
+  lifecycle {
+    ignore_changes = [
+      frontend_ip_configuration[0].private_ip_address_version,
+      frontend_ip_configuration[1].private_ip_address_version
+    ]
+  }
 }
 
 resource "azurerm_lb_probe" "http_probe" {
