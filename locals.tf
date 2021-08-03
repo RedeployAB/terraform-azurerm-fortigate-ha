@@ -23,10 +23,10 @@ locals {
       mgmt_interface_ip_address    = var.active_mgmt_interface_ip_address
       hasync_peer_ip_address       = var.passive_hasync_interface_ip_address
       public_ip_name               = coalesce(var.active_public_ip_name, "pip-${local.appliance_name.active}")
-      public_interface_name        = coalesce(var.active_public_interface_name, "nic-${local.appliance_name.active}-01")
-      private_interface_name       = coalesce(var.active_private_interface_name, "nic-${local.appliance_name.active}-02")
-      hasync_interface_name        = coalesce(var.active_hasync_interface_name, "nic-${local.appliance_name.active}-03")
-      mgmt_interface_name          = coalesce(var.active_mgmt_interface_name, "nic-${local.appliance_name.active}-04")
+      public_interface_name        = coalesce(var.active_public_interface_name, "nic-${local.appliance_name.active}-internet")
+      private_interface_name       = coalesce(var.active_private_interface_name, "nic-${local.appliance_name.active}-transit")
+      hasync_interface_name        = coalesce(var.active_hasync_interface_name, "nic-${local.appliance_name.active}-hasync")
+      mgmt_interface_name          = coalesce(var.active_mgmt_interface_name, "nic-${local.appliance_name.active}-mgmt")
       os_disk_name                 = coalesce(var.active_os_disk_name, "os-${local.appliance_name.active}")
       log_disk_name                = coalesce(var.active_log_disk_name, "data-${local.appliance_name.active}-01")
     }
@@ -43,10 +43,10 @@ locals {
       mgmt_interface_ip_address    = var.passive_mgmt_interface_ip_address
       hasync_peer_ip_address       = var.active_hasync_interface_ip_address
       public_ip_name               = coalesce(var.passive_public_ip_name, "pip-${local.appliance_name.passive}")
-      public_interface_name        = coalesce(var.passive_public_interface_name, "nic-${local.appliance_name.passive}-01")
-      private_interface_name       = coalesce(var.passive_private_interface_name, "nic-${local.appliance_name.passive}-02")
-      hasync_interface_name        = coalesce(var.passive_hasync_interface_name, "nic-${local.appliance_name.passive}-03")
-      mgmt_interface_name          = coalesce(var.passive_mgmt_interface_name, "nic-${local.appliance_name.passive}-04")
+      public_interface_name        = coalesce(var.passive_public_interface_name, "nic-${local.appliance_name.passive}-internet")
+      private_interface_name       = coalesce(var.passive_private_interface_name, "nic-${local.appliance_name.passive}-transit")
+      hasync_interface_name        = coalesce(var.passive_hasync_interface_name, "nic-${local.appliance_name.passive}-hasync")
+      mgmt_interface_name          = coalesce(var.passive_mgmt_interface_name, "nic-${local.appliance_name.passive}-mgmt")
       os_disk_name                 = coalesce(var.passive_os_disk_name, "os-${local.appliance_name.passive}")
       log_disk_name                = coalesce(var.passive_log_disk_name, "data-${local.appliance_name.passive}-01")
     }
