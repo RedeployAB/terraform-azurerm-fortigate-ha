@@ -6,7 +6,7 @@ resource "azurerm_virtual_network" "test_environment" {
   name                = "vnet-test-fgtvm"
   resource_group_name = var.resource_group_name
   location            = var.location
-  address_space       = ["10.100.10.0/27"]
+  address_space       = ["10.100.10.0/26"]
 
   tags = data.azurerm_resource_group.test_environment.tags
 }
@@ -50,7 +50,7 @@ resource "azurerm_network_security_rule" "allow_admin_ips" {
   count = length(var.allowed_admin_ips) > 0 ? 1 : 0
 
   resource_group_name         = azurerm_virtual_network.test_environment.resource_group_name
-  network_security_group_name = azurerm_network_security_group.test_environment["public"].name
+  network_security_group_name = azurerm_network_security_group.test_environment["mgmt"].name
 
   name                       = "AllowAdminInBound"
   priority                   = 1000

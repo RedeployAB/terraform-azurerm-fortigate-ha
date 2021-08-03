@@ -30,13 +30,13 @@ resource "azurerm_lb" "public_interface" {
   }
 
   # Dedicated active and passive PIPs
-  dynamic "frontend_ip_configuration" {
-    for_each = local.appliance_config
-    content {
-      name                 = local.public_frontend_ip_configuration_name[frontend_ip_configuration.key]
-      public_ip_address_id = module.appliance[frontend_ip_configuration.key].public_ip_id
-    }
-  }
+  # dynamic "frontend_ip_configuration" {
+  #   for_each = local.appliance_config
+  #   content {
+  #     name                 = local.public_frontend_ip_configuration_name[frontend_ip_configuration.key]
+  #     public_ip_address_id = module.appliance[frontend_ip_configuration.key].public_ip_id
+  #   }
+  # }
 
   tags = var.tags
 
@@ -103,47 +103,47 @@ resource "azurerm_network_interface_backend_address_pool_association" "public_po
 #   backend_address_pool_id        = azurerm_lb_backend_address_pool.public_pool.id
 # }
 
-resource "azurerm_lb_nat_rule" "public_ssh" {
-  for_each = local.appliance_config
+# resource "azurerm_lb_nat_rule" "public_ssh" {
+#   for_each = local.appliance_config
 
-  resource_group_name            = var.resource_group_name
-  loadbalancer_id                = azurerm_lb.public_interface.id
-  name                           = format("SSH-%s", each.key)
-  protocol                       = "Tcp"
-  frontend_port                  = 22
-  backend_port                   = 22
-  enable_floating_ip             = false
-  frontend_ip_configuration_name = local.public_frontend_ip_configuration_name[each.key]
-}
+#   resource_group_name            = var.resource_group_name
+#   loadbalancer_id                = azurerm_lb.public_interface.id
+#   name                           = format("SSH-%s", each.key)
+#   protocol                       = "Tcp"
+#   frontend_port                  = 22
+#   backend_port                   = 22
+#   enable_floating_ip             = false
+#   frontend_ip_configuration_name = local.public_frontend_ip_configuration_name[each.key]
+# }
 
-resource "azurerm_lb_nat_rule" "public_https" {
-  for_each = local.appliance_config
+# resource "azurerm_lb_nat_rule" "public_https" {
+#   for_each = local.appliance_config
 
-  resource_group_name            = var.resource_group_name
-  loadbalancer_id                = azurerm_lb.public_interface.id
-  name                           = format("HTTPS-%s", each.key)
-  protocol                       = "Tcp"
-  frontend_port                  = 8443
-  backend_port                   = 8443
-  enable_floating_ip             = false
-  frontend_ip_configuration_name = local.public_frontend_ip_configuration_name[each.key]
-}
+#   resource_group_name            = var.resource_group_name
+#   loadbalancer_id                = azurerm_lb.public_interface.id
+#   name                           = format("HTTPS-%s", each.key)
+#   protocol                       = "Tcp"
+#   frontend_port                  = 8443
+#   backend_port                   = 8443
+#   enable_floating_ip             = false
+#   frontend_ip_configuration_name = local.public_frontend_ip_configuration_name[each.key]
+# }
 
-resource "azurerm_network_interface_nat_rule_association" "public_ssh" {
-  for_each = local.appliance_config
+# resource "azurerm_network_interface_nat_rule_association" "public_ssh" {
+#   for_each = local.appliance_config
 
-  network_interface_id  = module.appliance[each.key].public_interface_id
-  ip_configuration_name = "ipconfig1" # Must be the same as the NIC IP-config name
-  nat_rule_id           = azurerm_lb_nat_rule.public_ssh[each.key].id
-}
+#   network_interface_id  = module.appliance[each.key].public_interface_id
+#   ip_configuration_name = "ipconfig1" # Must be the same as the NIC IP-config name
+#   nat_rule_id           = azurerm_lb_nat_rule.public_ssh[each.key].id
+# }
 
-resource "azurerm_network_interface_nat_rule_association" "public_https" {
-  for_each = local.appliance_config
+# resource "azurerm_network_interface_nat_rule_association" "public_https" {
+#   for_each = local.appliance_config
 
-  network_interface_id  = module.appliance[each.key].public_interface_id
-  ip_configuration_name = "ipconfig1" # Must be the same as the NIC IP-config name
-  nat_rule_id           = azurerm_lb_nat_rule.public_https[each.key].id
-}
+#   network_interface_id  = module.appliance[each.key].public_interface_id
+#   ip_configuration_name = "ipconfig1" # Must be the same as the NIC IP-config name
+#   nat_rule_id           = azurerm_lb_nat_rule.public_https[each.key].id
+# }
 
 resource "azurerm_lb_outbound_rule" "public_snat" {
   resource_group_name      = var.resource_group_name
