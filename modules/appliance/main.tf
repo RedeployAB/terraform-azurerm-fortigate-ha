@@ -104,6 +104,14 @@ resource "azurerm_virtual_machine_data_disk_attachment" "logs" {
   caching            = "ReadWrite"
 }
 
+data "azurerm_subnet" "appliance" {
+  for_each = local.subnets
+
+  name                 = each.value.name
+  virtual_network_name = each.value.virtual_network_name
+  resource_group_name  = each.value.resource_group_name
+}
+
 data "template_file" "config" {
   template = file(var.config_path)
   vars = {
@@ -112,6 +120,7 @@ data "template_file" "config" {
     public_gateway_ip_address  = local.network_interfaces["public"].gateway_ip_address
     private_gateway_ip_address = local.network_interfaces["private"].gateway_ip_address
     mgmt_gateway_ip_address    = local.network_interfaces["mgmt"].gateway_ip_address
+    hasync_priority            = var.hasync_priority
     hasync_peer_ip_address     = var.hasync_peer_ip_address
   }
 }

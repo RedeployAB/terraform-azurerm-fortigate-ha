@@ -31,19 +31,17 @@ module "appliance" {
   boot_diagnostics_storage_account_uri = var.boot_diagnostics_storage_account_uri
   log_disk_size_gb                     = var.log_disk_size_gb
 
-  hasync_peer_ip_address       = each.value.hasync_peer_ip_address
   public_subnet_id             = var.public_subnet_id
-  public_gateway_ip_address    = var.public_gateway_ip_address
   public_interface_ip_address  = each.value.public_interface_ip_address
   private_subnet_id            = var.private_subnet_id
-  private_gateway_ip_address   = var.private_gateway_ip_address
   private_interface_ip_address = each.value.private_interface_ip_address
   hasync_subnet_id             = var.hasync_subnet_id
-  hasync_gateway_ip_address    = var.hasync_gateway_ip_address
   hasync_interface_ip_address  = each.value.hasync_interface_ip_address
   mgmt_subnet_id               = var.mgmt_subnet_id
-  mgmt_gateway_ip_address      = var.mgmt_gateway_ip_address
   mgmt_interface_ip_address    = each.value.mgmt_interface_ip_address
+
+  hasync_priority        = (each.key == "active") ? 255 : 1
+  hasync_peer_ip_address = each.value.hasync_peer_ip_address
 
   os_disk_name           = each.value.os_disk_name
   log_disk_name          = each.value.log_disk_name

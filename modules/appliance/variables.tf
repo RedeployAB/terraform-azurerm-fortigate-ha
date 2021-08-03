@@ -156,15 +156,15 @@ variable "public_interface_ip_address" {
   }
 }
 
-variable "public_gateway_ip_address" {
-  type        = string
-  description = ""
+# variable "public_gateway_ip_address" {
+#   type        = string
+#   description = ""
 
-  validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.public_gateway_ip_address))
-    error_message = "The value must be a valid IPv4-address."
-  }
-}
+#   validation {
+#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.public_gateway_ip_address))
+#     error_message = "The value must be a valid IPv4-address."
+#   }
+# }
 
 variable "public_subnet_id" {
   type        = string
@@ -207,15 +207,15 @@ variable "private_interface_ip_address" {
   }
 }
 
-variable "private_gateway_ip_address" {
-  type        = string
-  description = ""
+# variable "private_gateway_ip_address" {
+#   type        = string
+#   description = ""
 
-  validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.private_gateway_ip_address))
-    error_message = "The value must be a valid IPv4-address."
-  }
-}
+#   validation {
+#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.private_gateway_ip_address))
+#     error_message = "The value must be a valid IPv4-address."
+#   }
+# }
 
 variable "hasync_interface_name" {
   type        = string
@@ -238,15 +238,15 @@ variable "hasync_interface_ip_address" {
   }
 }
 
-variable "hasync_gateway_ip_address" {
-  type        = string
-  description = ""
+# variable "hasync_gateway_ip_address" {
+#   type        = string
+#   description = ""
 
-  validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_gateway_ip_address))
-    error_message = "The value must be a valid IPv4-address."
-  }
-}
+#   validation {
+#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_gateway_ip_address))
+#     error_message = "The value must be a valid IPv4-address."
+#   }
+# }
 
 variable "hasync_subnet_id" {
   type        = string
@@ -289,13 +289,34 @@ variable "mgmt_interface_ip_address" {
   }
 }
 
-variable "mgmt_gateway_ip_address" {
+# variable "mgmt_gateway_ip_address" {
+#   type        = string
+#   description = ""
+
+#   validation {
+#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.mgmt_gateway_ip_address))
+#     error_message = "The value must be a valid IPv4-address."
+#   }
+# }
+
+variable "hasync_peer_ip_address" {
   type        = string
-  description = ""
+  description = "IP-address of the HA-sync peer appliance."
 
   validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.mgmt_gateway_ip_address))
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_peer_ip_address))
     error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "hasync_priority" {
+  type        = number
+  description = ""
+  default     = 255
+
+  validation {
+    condition     = var.hasync_priority >= 1 || var.hasync_priority <= 255
+    error_message = "The value must be within the range 1-255."
   }
 }
 
@@ -314,16 +335,6 @@ variable "attach_public_ip" {
   type        = bool
   description = "Used for skipping attachment of the public IP to the firewall for HA deployments."
   default     = true
-}
-
-variable "hasync_peer_ip_address" {
-  type        = string
-  description = ""
-
-  validation {
-    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_peer_ip_address))
-    error_message = "The value must be a valid IPv4-address."
-  }
 }
 
 variable "tags" {

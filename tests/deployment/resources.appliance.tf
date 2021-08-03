@@ -54,12 +54,10 @@ module "test_deployment" {
 
   # IP-address assignments
   cluster_ip_address                   = cidrhost(azurerm_subnet.test_environment["private"].address_prefixes[0], 4)
-  active_hasync_peer_ip_address        = cidrhost(azurerm_subnet.test_environment["hasync"].address_prefixes[0], 5)
   active_public_interface_ip_address   = cidrhost(azurerm_subnet.test_environment["public"].address_prefixes[0], 4)
   active_private_interface_ip_address  = cidrhost(azurerm_subnet.test_environment["private"].address_prefixes[0], 5)
   active_hasync_interface_ip_address   = cidrhost(azurerm_subnet.test_environment["hasync"].address_prefixes[0], 4)
   active_mgmt_interface_ip_address     = cidrhost(azurerm_subnet.test_environment["mgmt"].address_prefixes[0], 4)
-  passive_hasync_peer_ip_address       = cidrhost(azurerm_subnet.test_environment["hasync"].address_prefixes[0], 4)
   passive_public_interface_ip_address  = cidrhost(azurerm_subnet.test_environment["public"].address_prefixes[0], 5)
   passive_private_interface_ip_address = cidrhost(azurerm_subnet.test_environment["private"].address_prefixes[0], 6)
   passive_hasync_interface_ip_address  = cidrhost(azurerm_subnet.test_environment["hasync"].address_prefixes[0], 5)
