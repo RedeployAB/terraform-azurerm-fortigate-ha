@@ -381,26 +381,6 @@ variable "cluster_ip_address" {
   }
 }
 
-# variable "active_hasync_peer_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.active_hasync_peer_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
-
-# variable "passive_hasync_peer_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.passive_hasync_peer_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
-
 variable "cluster_public_ip_name" {
   type        = string
   description = ""

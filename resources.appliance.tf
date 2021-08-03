@@ -40,7 +40,7 @@ module "appliance" {
   mgmt_subnet_id               = var.mgmt_subnet_id
   mgmt_interface_ip_address    = each.value.mgmt_interface_ip_address
 
-  hasync_priority        = (each.key == "active") ? 255 : 1
+  hasync_priority        = each.value.hasync_priority
   hasync_peer_ip_address = each.value.hasync_peer_ip_address
 
   os_disk_name           = each.value.os_disk_name

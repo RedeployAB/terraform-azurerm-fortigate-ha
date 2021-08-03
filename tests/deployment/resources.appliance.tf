@@ -26,8 +26,6 @@ locals {
 module "test_deployment" {
   source = "../../."
 
-  # active_appliance_name      = format("${local.deployment_name}-%s", random_id.appliance["active"].hex)
-  # passive_appliance_name     = format("${local.deployment_name}-%s", random_id.appliance["passive"].hex)
   active_appliance_name      = "${local.deployment_name}-primary"
   passive_appliance_name     = "${local.deployment_name}-secondary"
   availability_set_name      = "as-${local.deployment_name}"

@@ -156,16 +156,6 @@ variable "public_interface_ip_address" {
   }
 }
 
-# variable "public_gateway_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.public_gateway_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
-
 variable "public_subnet_id" {
   type        = string
   description = "Resource ID of the subnet where the public (internet facing) NIC will be residing."
@@ -207,16 +197,6 @@ variable "private_interface_ip_address" {
   }
 }
 
-# variable "private_gateway_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.private_gateway_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
-
 variable "hasync_interface_name" {
   type        = string
   description = "Name of the HA-sync NIC resource. Will be generated if omitted."
@@ -237,16 +217,6 @@ variable "hasync_interface_ip_address" {
     error_message = "The value must be a valid IPv4-address."
   }
 }
-
-# variable "hasync_gateway_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_gateway_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
 
 variable "hasync_subnet_id" {
   type        = string
@@ -288,16 +258,6 @@ variable "mgmt_interface_ip_address" {
     error_message = "The value must be a valid IPv4-address."
   }
 }
-
-# variable "mgmt_gateway_ip_address" {
-#   type        = string
-#   description = ""
-
-#   validation {
-#     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.mgmt_gateway_ip_address))
-#     error_message = "The value must be a valid IPv4-address."
-#   }
-# }
 
 variable "hasync_peer_ip_address" {
   type        = string

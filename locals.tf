@@ -21,6 +21,7 @@ locals {
       private_interface_ip_address = var.active_private_interface_ip_address
       hasync_interface_ip_address  = var.active_hasync_interface_ip_address
       mgmt_interface_ip_address    = var.active_mgmt_interface_ip_address
+      hasync_priority              = 255
       hasync_peer_ip_address       = var.passive_hasync_interface_ip_address
       public_ip_name               = coalesce(var.active_public_ip_name, "pip-${local.appliance_name.active}")
       public_interface_name        = coalesce(var.active_public_interface_name, "nic-${local.appliance_name.active}-internet")
@@ -41,6 +42,7 @@ locals {
       private_interface_ip_address = var.passive_private_interface_ip_address
       hasync_interface_ip_address  = var.passive_hasync_interface_ip_address
       mgmt_interface_ip_address    = var.passive_mgmt_interface_ip_address
+      hasync_priority              = 1
       hasync_peer_ip_address       = var.active_hasync_interface_ip_address
       public_ip_name               = coalesce(var.passive_public_ip_name, "pip-${local.appliance_name.passive}")
       public_interface_name        = coalesce(var.passive_public_interface_name, "nic-${local.appliance_name.passive}-internet")
