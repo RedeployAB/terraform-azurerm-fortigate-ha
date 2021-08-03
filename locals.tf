@@ -49,4 +49,32 @@ locals {
       log_disk_name                = coalesce(var.passive_log_disk_name, "data-${local.appliance_name.passive}-01")
     }
   }
+
+  lb_ids = {
+    public  = azurerm_lb.interface["public"].id
+    private = azurerm_lb.interface["private"].id
+  }
+
+  lb_config = {
+    public = {
+      name = local.public_load_balancer_name
+      frontend_ip_configuration = [{
+        name                          = "frontend-cluster"
+        subnet_id                     = null
+        public_ip_address_id          = azurerm_public_ip.cluster.id
+        private_ip_address            = null
+        private_ip_address_allocation = null
+      }]
+    }
+    private = {
+      name = local.private_load_balancer_name
+      frontend_ip_configuration = [{
+        name                          = "frontend"
+        subnet_id                     = var.private_subnet_id
+        public_ip_address_id          = null
+        private_ip_address            = var.cluster_ip_address
+        private_ip_address_allocation = "Static"
+      }]
+    }
+  }
 }
