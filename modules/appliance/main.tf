@@ -15,7 +15,7 @@ resource "azurerm_network_interface" "appliance" {
   resource_group_name           = var.resource_group_name
   location                      = var.location
   enable_accelerated_networking = true
-  enable_ip_forwarding          = each.key == "public" || each.key == "private" ? true : false
+  enable_ip_forwarding          = each.key != "mgmt" ? true : false
 
   ip_configuration {
     name                          = "ipconfig1"
