@@ -115,12 +115,15 @@ data "azurerm_subnet" "appliance" {
 data "template_file" "config" {
   template = file(var.config_path)
   vars = {
-    license_type               = var.license_type
-    license_file_contents      = local.license_contents
-    public_gateway_ip_address  = local.network_interfaces["public"].gateway_ip_address
-    private_gateway_ip_address = local.network_interfaces["private"].gateway_ip_address
-    mgmt_gateway_ip_address    = local.network_interfaces["mgmt"].gateway_ip_address
-    hasync_priority            = var.hasync_priority
-    hasync_peer_ip_address     = var.hasync_peer_ip_address
+    license_type                = var.license_type
+    license_file_contents       = local.license_contents
+    public_gateway_ip_address   = local.network_interfaces["public"].gateway_ip_address
+    private_gateway_ip_address  = local.network_interfaces["private"].gateway_ip_address
+    hasync_interface_ip_address = local.network_interfaces["hasync"].private_ip_address
+    hasync_gateway_ip_address   = local.network_interfaces["hasync"].gateway_ip_address
+    hasync_network_mask         = local.network_interfaces["hasync"].network_mask
+    mgmt_gateway_ip_address     = local.network_interfaces["mgmt"].gateway_ip_address
+    hasync_priority             = var.hasync_priority
+    hasync_peer_ip_address      = var.hasync_peer_ip_address
   }
 }
