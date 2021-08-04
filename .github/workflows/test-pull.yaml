@@ -36,5 +36,5 @@ jobs:
         timeout-minutes: 45
       
       - name: "Terraform: Destroy"
-        run: terraform destroy -auto-approve -input=false
+        run: terraform destroy -auto-approve -lock-timeout=1m -input=false
         if: always()
