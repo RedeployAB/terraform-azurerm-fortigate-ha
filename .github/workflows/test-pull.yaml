@@ -4,6 +4,10 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "**.tf"
+      - "**.tfvars"
+      - "**.conf"
 
 env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
