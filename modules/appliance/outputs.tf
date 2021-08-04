@@ -9,7 +9,3 @@ output "public_interface_id" {
 output "private_interface_id" {
   value = azurerm_network_interface.appliance["private"].id
 }
-
-output "test" {
-  value = "test"
-}
