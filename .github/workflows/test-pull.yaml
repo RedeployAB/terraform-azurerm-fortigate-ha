@@ -37,7 +37,7 @@ jobs:
         run: terraform init -backend=false -input=false
 
       - name: "Terraform: Apply"
-        run: terraform apply -parallelism=30 -auto-approve -lock=false -input=false
+        run: terraform apply -parallelism=5 -auto-approve -lock=false -input=false
         timeout-minutes: 20
       
       - name: "Terraform: Destroy"
