@@ -77,7 +77,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "private_p
 
 resource "azurerm_lb_outbound_rule" "public_snat" {
   name                     = "outbound"
-  resource_group_name = var.resource_group_name
+  resource_group_name      = var.resource_group_name
   loadbalancer_id          = azurerm_lb.interface["public"].id
   protocol                 = "All"
   enable_tcp_reset         = false
