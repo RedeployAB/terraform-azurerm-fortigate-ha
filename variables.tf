@@ -27,8 +27,8 @@ variable "passive_appliance_name" {
 
 variable "size" {
   type        = string
-  description = "VM size for the appliance. Size must support SSDs. Default is the smallest size that supports accelerated networking."
-  default     = "Standard_DS2_v2"
+  description = "VM size for the appliance. Size must support premium storage, accelerated networking and 4 NICs."
+  default     = "Standard_DS3_v2"
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9_]{11,}$", var.size))
@@ -142,6 +142,30 @@ variable "passive_private_interface_name" {
   default     = null
 }
 
+variable "active_hasync_interface_name" {
+  type        = string
+  description = ""
+  default     = null
+}
+
+variable "passive_hasync_interface_name" {
+  type        = string
+  description = ""
+  default     = null
+}
+
+variable "active_mgmt_interface_name" {
+  type        = string
+  description = ""
+  default     = null
+}
+
+variable "passive_mgmt_interface_name" {
+  type        = string
+  description = ""
+  default     = null
+}
+
 variable "active_public_interface_ip_address" {
   type        = string
   description = ""
@@ -178,6 +202,46 @@ variable "passive_private_interface_ip_address" {
 
   validation {
     condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.passive_private_interface_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "active_hasync_interface_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.active_hasync_interface_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "passive_hasync_interface_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.passive_hasync_interface_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "active_mgmt_interface_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.active_mgmt_interface_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "passive_mgmt_interface_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.passive_mgmt_interface_ip_address))
     error_message = "The value must be a valid IPv4-address."
   }
 }
@@ -237,6 +301,16 @@ variable "public_subnet_id" {
   }
 }
 
+variable "public_gateway_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.public_gateway_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
 variable "private_subnet_id" {
   type        = string
   description = "Resource ID of the subnet where the private (non-internet facing) NIC will be residing."
@@ -244,6 +318,56 @@ variable "private_subnet_id" {
   validation {
     condition     = can(regex("^/subscriptions/[a-z0-9-]{36}/resourceGroups/[a-zA-Z0-9-]{3,63}/providers/Microsoft.Network/virtualNetworks/[a-z0-9-]{2,64}/subnets/[a-z0-9-]{1,80}$", var.private_subnet_id))
     error_message = "The value must be a valid subnet resource ID."
+  }
+}
+
+variable "private_gateway_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.private_gateway_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "hasync_subnet_id" {
+  type        = string
+  description = "Resource ID of the subnet where the HA-sync NIC will be residing."
+
+  validation {
+    condition     = can(regex("^/subscriptions/[a-z0-9-]{36}/resourceGroups/[a-zA-Z0-9-]{3,63}/providers/Microsoft.Network/virtualNetworks/[a-z0-9-]{2,64}/subnets/[a-z0-9-]{1,80}$", var.hasync_subnet_id))
+    error_message = "The value must be a valid subnet resource ID."
+  }
+}
+
+variable "hasync_gateway_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.hasync_gateway_ip_address))
+    error_message = "The value must be a valid IPv4-address."
+  }
+}
+
+variable "mgmt_subnet_id" {
+  type        = string
+  description = "Resource ID of the subnet where the management NIC will be residing."
+
+  validation {
+    condition     = can(regex("^/subscriptions/[a-z0-9-]{36}/resourceGroups/[a-zA-Z0-9-]{3,63}/providers/Microsoft.Network/virtualNetworks/[a-z0-9-]{2,64}/subnets/[a-z0-9-]{1,80}$", var.mgmt_subnet_id))
+    error_message = "The value must be a valid subnet resource ID."
+  }
+}
+
+variable "mgmt_gateway_ip_address" {
+  type        = string
+  description = ""
+
+  validation {
+    condition     = can(regex("^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$", var.mgmt_gateway_ip_address))
+    error_message = "The value must be a valid IPv4-address."
   }
 }
 

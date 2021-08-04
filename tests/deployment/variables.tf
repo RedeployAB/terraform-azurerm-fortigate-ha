@@ -13,7 +13,7 @@ variable "tags" {
 
 variable "size" {
   type    = string
-  default = "Standard_DS2_v2"
+  default = "Standard_DS3_v2"
 }
 
 variable "os_version" {
