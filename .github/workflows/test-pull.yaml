@@ -1,0 +1,39 @@
+name: Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+defaults:
+  run:
+    working-directory: tests/deployment
+
+jobs:
+  deployment:
+    name: Test deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: "~>0.15"
+
+      - name: "Terraform: Init"
+        run: terraform init -backend=false -input=false
+
+      - name: "Terraform: Apply"
+        run: terraform apply -auto-approve -input=false
+        continue-on-error: true
+      
+      - name: "Terraform: Destroy"
+        run: terraform destroy -auto-approve -input=false
