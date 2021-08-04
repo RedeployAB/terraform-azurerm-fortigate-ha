@@ -41,14 +41,10 @@ module "test_deployment" {
   admin_password = random_password.appliance_admin.result
 
   # Subnet references
-  public_subnet_id           = azurerm_subnet.test_environment["public"].id
-  public_gateway_ip_address  = cidrhost(azurerm_subnet.test_environment["public"].address_prefixes[0], 1)
-  private_subnet_id          = azurerm_subnet.test_environment["private"].id
-  private_gateway_ip_address = cidrhost(azurerm_subnet.test_environment["private"].address_prefixes[0], 1)
-  hasync_subnet_id           = azurerm_subnet.test_environment["hasync"].id
-  hasync_gateway_ip_address  = cidrhost(azurerm_subnet.test_environment["hasync"].address_prefixes[0], 1)
-  mgmt_subnet_id             = azurerm_subnet.test_environment["mgmt"].id
-  mgmt_gateway_ip_address    = cidrhost(azurerm_subnet.test_environment["mgmt"].address_prefixes[0], 1)
+  public_subnet_id  = azurerm_subnet.test_environment["public"].id
+  private_subnet_id = azurerm_subnet.test_environment["private"].id
+  hasync_subnet_id  = azurerm_subnet.test_environment["hasync"].id
+  mgmt_subnet_id    = azurerm_subnet.test_environment["mgmt"].id
 
   # IP-address assignments
   cluster_ip_address                   = cidrhost(azurerm_subnet.test_environment["private"].address_prefixes[0], 4)
