@@ -41,4 +41,4 @@ jobs:
       
       - name: "Terraform: Destroy"
         run: terraform destroy -auto-approve -lock=false -input=false
-        if: always()
+        if: ${{ always() }}
