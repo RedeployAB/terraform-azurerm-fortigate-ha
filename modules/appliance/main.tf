@@ -82,6 +82,14 @@ resource "azurerm_linux_virtual_machine" "appliance" {
   }
 
   tags = var.tags
+
+  # Ignore changes to custom_data since every bootstrap config change
+  # will trigger a new deployment otherwise. 
+  lifecycle {
+    ignore_changes = [
+      custom_data
+    ]
+  }
 }
 
 resource "azurerm_managed_disk" "logs" {
