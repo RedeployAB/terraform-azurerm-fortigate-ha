@@ -39,19 +39,19 @@ resource "azurerm_lb" "interface" {
   }
 }
 
-resource "azurerm_lb_probe" "http_probe" {
+resource "azurerm_lb_probe" "appliance" {
   for_each = local.lb_ids
 
-  name                = "http-probe"
+  name                = "lbprobe"
   resource_group_name = var.resource_group_name
   loadbalancer_id     = each.value
-  port                = 80
+  port                = 8008
   protocol            = "Tcp"
   interval_in_seconds = 5
   number_of_probes    = 2
 }
 
-resource "azurerm_lb_backend_address_pool" "pool" {
+resource "azurerm_lb_backend_address_pool" "appliance" {
   for_each = local.lb_ids
 
   name            = "backend"
@@ -64,7 +64,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "public_po
 
   network_interface_id    = module.appliance[each.key].public_interface_id
   ip_configuration_name   = "ipconfig1" # Must be the same as the NIC IP-config name
-  backend_address_pool_id = azurerm_lb_backend_address_pool.pool["public"].id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.appliance["public"].id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "private_pool" {
@@ -72,7 +72,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "private_p
 
   network_interface_id    = module.appliance[each.key].private_interface_id
   ip_configuration_name   = "ipconfig1" # Must be the same as the NIC IP-config name
-  backend_address_pool_id = azurerm_lb_backend_address_pool.pool["private"].id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.appliance["private"].id
 }
 
 resource "azurerm_lb_outbound_rule" "public_snat" {
@@ -81,7 +81,7 @@ resource "azurerm_lb_outbound_rule" "public_snat" {
   loadbalancer_id          = azurerm_lb.interface["public"].id
   protocol                 = "All"
   enable_tcp_reset         = false
-  backend_address_pool_id  = azurerm_lb_backend_address_pool.pool["public"].id
+  backend_address_pool_id  = azurerm_lb_backend_address_pool.appliance["public"].id
   idle_timeout_in_minutes  = 4
   allocated_outbound_ports = 32000 # half per instance
 
@@ -100,7 +100,7 @@ resource "azurerm_lb_rule" "private_rule" {
   backend_port                   = 0
   enable_floating_ip             = true
   idle_timeout_in_minutes        = 15
-  probe_id                       = azurerm_lb_probe.http_probe["private"].id
+  probe_id                       = azurerm_lb_probe.appliance["private"].id
   frontend_ip_configuration_name = local.lb_config["private"].frontend_ip_configuration[0].name
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.pool["private"].id
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.appliance["private"].id
 }
